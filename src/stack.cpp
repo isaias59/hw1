@@ -1,65 +1,16 @@
-#ifndef STACK_HPP
-#define STACK_HPP
-
-#include <string>
 #include <iostream>
-using namespace std;
+#include "stack.hpp" 
 
-constexpr int STK_MAX = 1000; 
+int main()
 
-class Stack {
-    int _top; 
-    char buf[STK_MAX]; 
+ {
+    Stack stk; 
+    string line; 
 
-public:
-    Stack() : _top(-1) {}
-
-    void push(char c) {
-        if (!isFull()) {
-            buf[++_top] = c; 
-        } else {
-            cout << "Stack is full. Cannot push '" << c << "'\n";
-        }
+    while (getline(std::cin, line)) { 
+        push_all(stk, line); 
+        pop_all(stk); 
     }
-
-    char pop() {
-        if (!isEmpty()) {
-            return buf[_top--];
-        } else {
-            cout << "Stack is empty. Cannot pop.\n";
-            return '@'; 
-        }
-    }
-
-    char top() {
-        if (!isEmpty()) {
-            return buf[_top]; 
-        } else {
-            cout << "Stack is empty. Top character not available.\n";
-            return '@'; 
-        }
-    }
-
-    bool isEmpty() {
-        return _top == -1; 
-    }
-
-    bool isFull() {
-        return _top == STK_MAX - 1; 
-    }
-};
-
-void push_all(Stack &stk, string line) {
-    for (char c : line) {
-        stk.push(c);
-    }
+    
+    return 0;     
 }
-
-void pop_all(Stack &stk) {
-    while (!stk.isEmpty()) {
-        cout << stk.pop();
-    }
-    cout << '\n'; 
-}
-
-#endif 
