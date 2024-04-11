@@ -1,10 +1,14 @@
-#ifndef LETTER_COUNT_HPP
-#define LETTER_COUNT_HPP
-#include <string>
+#include <iostream>
+#include "stack.hpp" 
 
-int char_to_index(char ch);
-char index_to_char(int i);
-void count(std::string s, int counts[]);
-void print_counts(const int counts[], int len);
+int main() {
+    Stack stk; 
+    string line; 
 
-#endif
+    while (getline(std::cin, line)) { 
+        push_all(stk, line); 
+        pop_all(stk); 
+    }
+
+    return 0; 
+}
