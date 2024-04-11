@@ -1,41 +1,65 @@
+#ifndef STACK_HPP
+#define STACK_HPP
 
-#include <iostream>
 #include <string>
-#include <cctype> 
-#include "letter_count.hpp"
+#include <iostream>
+using namespace std;
 
-constexpr int N_CHARS = 'Z' - 'A' + 1; 
-int char_to_index(char ch) {
-    return std::toupper(ch) - 'A';
-}
+constexpr int STK_MAX = 1000; 
 
-char index_to_char(int i) {
-    return 'A' + i;
-}
+class Stack {
+    int _top; 
+    char buf[STK_MAX]; 
 
-void count(std::string s, int counts[]) {
-    for (char ch : s) {
-        if (std::isalpha(ch)) { 
-            ++counts[char_to_index(ch)];
+public:
+    Stack() : _top(-1) {}
+
+    void push(char c) {
+        if (!isFull()) {
+            buf[++_top] = c; 
+        } else {
+            cout << "Stack is full. Cannot push '" << c << "'\n";
         }
     }
-}
 
-void print_counts(const int counts[], int len) {
-    for (int i = 0; i < len; ++i) {
-        std::cout << index_to_char(i) << ' ' << counts[i] << '\n';
+    char pop() {
+        if (!isEmpty()) {
+            return buf[_top--];
+        } else {
+            cout << "Stack is empty. Cannot pop.\n";
+            return '@'; 
+        }
+    }
+
+    char top() {
+        if (!isEmpty()) {
+            return buf[_top]; 
+        } else {
+            cout << "Stack is empty. Top character not available.\n";
+            return '@'; 
+        }
+    }
+
+    bool isEmpty() {
+        return _top == -1; 
+    }
+
+    bool isFull() {
+        return _top == STK_MAX - 1; 
+    }
+};
+
+void push_all(Stack &stk, string line) {
+    for (char c : line) {
+        stk.push(c);
     }
 }
 
-int main() {
-    int counts[N_CHARS] = {0};
-    std::string line;
-
-    while (std::getline(std::cin, line)) {
-        count(line, counts);
+void pop_all(Stack &stk) {
+    while (!stk.isEmpty()) {
+        cout << stk.pop();
     }
-
-    print_counts(counts, N_CHARS);
-    return 0;
+    cout << '\n'; 
 }
 
+#endif 
