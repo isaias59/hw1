@@ -1,5 +1,6 @@
 #ifndef LETTER_COUNT_HPP
 #define LETTER_COUNT_HPP
+
 #include <string>
 
 int char_to_index(char ch);
