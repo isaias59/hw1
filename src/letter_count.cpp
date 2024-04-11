@@ -1,10 +1,10 @@
 
 #include <iostream>
-#include <string>
 #include <cctype> 
 #include "letter_count.hpp"
 
-constexpr int N_CHARS = 'Z' - 'A' + 1; 
+constexpr int N_CHARS = ('Z'-'A'+1); 
+
 int char_to_index(char ch) {
     return std::toupper(ch) - 'A';
 }
@@ -15,8 +15,9 @@ char index_to_char(int i) {
 
 void count(std::string s, int counts[]) {
     for (char ch : s) {
-        if (std::isalpha(ch)) { 
-            ++counts[char_to_index(ch)];
+        if (std::isalpha(ch)) {
+            int index = char_to_index(ch);
+            counts[index]++;
         }
     }
 }
@@ -28,14 +29,11 @@ void print_counts(const int counts[], int len) {
 }
 
 int main() {
-    int counts[N_CHARS] = {0};
+    int counts[N_CHARS] = {};
     std::string line;
-
     while (std::getline(std::cin, line)) {
         count(line, counts);
     }
-
     print_counts(counts, N_CHARS);
     return 0;
 }
-
